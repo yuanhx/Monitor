@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D6A13888-DAB7-4876-B6AC-28844AEFF9DC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>hkdvrlib</RootNamespace>
+    <AssemblyName>hkdvrlib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>http://localhost/hkdvrlib/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\test\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\test\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Action\HKAlarmOutAction.cs" />
+    <Compile Include="Action\HKAlarmOutActionConfig.cs" />
+    <Compile Include="Action\HKPTZAction.cs" />
+    <Compile Include="Action\HKPTZActionConfig.cs" />
+    <Compile Include="HKMetaManager.cs" />
+    <Compile Include="Exception\BaseException.cs" />
+    <Compile Include="Monitor\HKDVRMonitor.cs" />
+    <Compile Include="Monitor\HKDVRMonitorAlarm.cs" />
+    <Compile Include="Monitor\HKDVRMonitorConfig.cs" />
+    <Compile Include="Monitor\HKDVRMonitorParamConfig.cs" />
+    <Compile Include="SDK\StreamMediaClientSDKWrap.cs" />
+    <Compile Include="VideoSource\Card\CardNetPlayer.cs" />
+    <Compile Include="VideoSource\Card\CardPlayer.cs" />
+    <Compile Include="VideoSource\DVR\AlarmCtrl.cs" />
+    <Compile Include="VideoSource\DVR\FormHKBackVSConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VideoSource\DVR\FormHKBackVSConfig.designer.cs">
+      <DependentUpon>FormHKBackVSConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VideoSource\DVR\FormHKRealVSConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VideoSource\DVR\FormHKRealVSConfig.designer.cs">
+      <DependentUpon>FormHKRealVSConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VideoSource\DVR\HKDefine.cs" />
+    <Compile Include="VideoSource\DVR\HKDVRBackPlayerFactory.cs" />
+    <Compile Include="VideoSource\DVR\HKDVRDevice.cs" />
+    <Compile Include="VideoSource\DVR\HKDVRRealPlayerFactory.cs" />
+    <Compile Include="VideoSource\DVR\HKDVRVideoSource.cs" />
+    <Compile Include="VideoSource\DVR\HKMP4Play.cs" />
+    <Compile Include="VideoSource\DVR\HKPTZCtrl.cs" />
+    <Compile Include="VideoSource\DVR\ImageDrawer.cs" />
+    <Compile Include="VideoSource\DVR\MP4Play.cs" />
+    <Compile Include="VideoSource\File\FormHKFileVSConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VideoSource\File\FormHKFileVSConfig.Designer.cs">
+      <DependentUpon>FormHKFileVSConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ctrls\SunKeyCtrl.cs" />
+    <Compile Include="SDK\HikClientSDKWrap.cs" />
+    <Compile Include="VideoSource\File\HKFilePlayer.cs" />
+    <Compile Include="Ctrls\BackPlayer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ctrls\BackPlayer.Designer.cs">
+      <DependentUpon>BackPlayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SDK\DS40xxSDKWrap.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SDK\DeviceCfgSDKWrap.cs" />
+    <Compile Include="SDK\HCNetSDKWrap.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SDK\IImage.cs" />
+    <Compile Include="SDK\MP4PlaySDKWrap.cs" />
+    <Compile Include="SDK\PlayM4SDKWrap.cs" />
+    <Compile Include="SDK\PTZSDKWrap.cs" />
+    <Compile Include="SDK\SunKeyAPI.cs" />
+    <Compile Include="SDK\wbitmap.cs" />
+    <Compile Include="SDK\WinSDK.cs" />
+    <Compile Include="VideoSource\StreamMedia\StreamMediaClientManager.cs" />
+    <Compile Include="VideoSource\StreamMedia\StreamMediaPlayer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Ctrls\BackPlayer.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BackPlayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VideoSource\DVR\FormHKBackVSConfig.resx">
+      <DependentUpon>FormHKBackVSConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VideoSource\DVR\FormHKRealVSConfig.resx">
+      <DependentUpon>FormHKRealVSConfig.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\controllib\controllib.csproj">
+      <Project>{C6BEF84F-2D24-4E57-AB33-9696B43EBE10}</Project>
+      <Name>controllib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\netlib\netlib.csproj">
+      <Project>{09386657-9B8B-425C-B389-F66E35E6F081}</Project>
+      <Name>netlib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\visionlib\visionlib.csproj">
+      <Project>{2E83FBAD-9911-4F44-BAB8-0DD671931235}</Project>
+      <Name>visionlib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

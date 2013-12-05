@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2E7E677D-1A89-48B6-AA24-00CDE342E0B7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SDP</RootNamespace>
+    <AssemblyName>SDPLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\test\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\test\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\SystemConfig.cs" />
+    <Compile Include="Login\LoginInfo.cs" />
+    <Compile Include="System\SystemContext.cs" />
+    <Compile Include="Data\DefValue\BaseDefaultValue.cs" />
+    <Compile Include="Data\DefValue\SysDefaultValue.cs" />
+    <Compile Include="Data\List\DataList.cs" />
+    <Compile Include="Data\List\DataListManager.cs" />
+    <Compile Include="Data\Map\DataMap.cs" />
+    <Compile Include="Data\Map\DataMapManager.cs" />
+    <Compile Include="Data\Page\PageManager.cs" />
+    <Compile Include="Data\Rule\DataRule.cs" />
+    <Compile Include="Data\Rule\DataRuleManager.cs" />
+    <Compile Include="Data\Rule\RuleColumn.cs" />
+    <Compile Include="Data\Rule\RuleColumns.cs" />
+    <Compile Include="Data\Rule\RuleRow.cs" />
+    <Compile Include="Data\Seq\SEQManager.cs" />
+    <Compile Include="Data\Seq\SequenceCache.cs" />
+    <Compile Include="Data\Transaction\Transactior.cs" />
+    <Compile Include="Error\RuleColumnConstraintException.cs" />
+    <Compile Include="Error\RuleColumnException.cs" />
+    <Compile Include="Error\RuleException.cs" />
+    <Compile Include="Error\SDPException.cs" />
+    <Compile Include="Error\TransactionException.cs" />
+    <Compile Include="Services\CommonServices.cs" />
+    <Compile Include="Services\DataExServices.cs" />
+    <Compile Include="Services\DataRuleServices.cs" />
+    <Compile Include="Services\DataServices.cs" />
+    <Compile Include="Client\SDPClient.cs" />
+    <Compile Include="Common\InParams.cs" />
+    <Compile Include="Common\IParam.cs" />
+    <Compile Include="Common\IProperty.cs" />
+    <Compile Include="Common\ISerializable.cs" />
+    <Compile Include="Common\OutParams.cs" />
+    <Compile Include="Common\Param.cs" />
+    <Compile Include="Common\Property.cs" />
+    <Compile Include="Common\SignConstant.cs" />
+    <Compile Include="Common\SysConstant.cs" />
+    <Compile Include="Data\DataTypes.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\SDP.Client\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\LoginServices.cs" />
+    <Compile Include="Util\BCUtil.cs" />
+    <Compile Include="Util\CommonUtils.cs" />
+    <Compile Include="Util\ComputerUtil.cs" />
+    <Compile Include="Util\DataUtil.cs" />
+    <Compile Include="Util\DateTimeUtil.cs" />
+    <Compile Include="Util\NetUtil.cs" />
+    <Compile Include="Util\QueryUtil.cs" />
+    <Compile Include="Util\RegexUtil.cs" />
+    <Compile Include="Util\StrUtil.cs" />
+    <Compile Include="Util\SystemUtil.cs" />
+    <Compile Include="Util\TableUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\SDP.Client\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SDP.Client\ComRequest1.wsdl" />
+    <None Include="Service References\SDP.Client\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SDP.Client\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SDP.Client\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpZipLib\ICSharpCode.SharpZLib.csproj">
+      <Project>{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}</Project>
+      <Name>ICSharpCode.SharpZLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

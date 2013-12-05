@@ -1,0 +1,27 @@
+<?xml version="1.0" standalone="yes"?>
+<transaction ds="">
+    <!--item type=sql;storeproc;table-->
+	<item type="sql" ds="">
+		insert into t1()
+	</item>
+	<item type="storeproc" ds="">
+		sss
+	</item>
+	<item type="table" dr="">
+		<rows>
+			<!--row state=ins;upd;del-->
+			<row state="ins">
+				<field name=""></field>
+			</row>
+			<row state="upd">
+				<field name="">
+					<old></old>
+					<new></new>
+				</field>
+			</row>
+			<row state="del">
+				<field name=""></field>
+			</row>
+		</rows>
+	</item>
+</transaction>

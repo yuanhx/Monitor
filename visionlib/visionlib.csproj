@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2E83FBAD-9911-4F44-BAB8-0DD671931235}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>visionlib</RootNamespace>
+    <AssemblyName>visionlib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <PublishUrl>http://localhost/visionlib/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\test\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\test\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="action\Action.cs" />
+    <Compile Include="action\ActionManager.cs" />
+    <Compile Include="action\monitor\MonitorAction.cs" />
+    <Compile Include="action\scheduler\SchedulerAction.cs" />
+    <Compile Include="common\PartialConfig.cs" />
+    <Compile Include="common\Popedom.cs" />
+    <Compile Include="common\Property.cs" />
+    <Compile Include="config\action\ActionConfig.cs" />
+    <Compile Include="config\action\ActionParam.cs" />
+    <Compile Include="config\action\ActionType.cs" />
+    <Compile Include="config\monitor\ActionParamConfig.cs" />
+    <Compile Include="config\monitor\BlobTrackParamConfig.cs" />
+    <Compile Include="config\monitor\RunConfig.cs" />
+    <Compile Include="config\monitor\RunParamConfig.cs" />
+    <Compile Include="config\monitor\VisionParamConfig.cs" />
+    <Compile Include="config\monitor\VisionUserParamConfig.cs" />
+    <Compile Include="config\ui\ConfigControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="config\ui\ConfigControl.Designer.cs">
+      <DependentUpon>ConfigControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="config\ui\ConfigUI.cs" />
+    <Compile Include="config\ConfigType.cs" />
+    <Compile Include="config\extend\ExtendTypes.cs" />
+    <Compile Include="config\extend\ExtendTypesManager.cs" />
+    <Compile Include="config\extend\MetaManager.cs" />
+    <Compile Include="config\filter\FilterConfig.cs" />
+    <Compile Include="config\monitor\BlobTrackerConfig.cs" />
+    <Compile Include="config\role\RoleConfig.cs" />
+    <Compile Include="config\scheduler\SchedulerConfig.cs" />
+    <Compile Include="config\scheduler\SchedulerType.cs" />
+    <Compile Include="config\remotesystem\RemoteSystemConfig.cs" />
+    <Compile Include="config\task\TaskConfig.cs" />
+    <Compile Include="config\task\TaskType.cs" />
+    <Compile Include="config\user\UserConfig.cs" />
+    <Compile Include="filter\Filter.cs" />
+    <Compile Include="filter\FilterManager.cs" />
+    <Compile Include="monitor\MonitorWatchManager.cs" />
+    <Compile Include="monitor\MonitorWatcher.cs" />
+    <Compile Include="monitor\vision\BlobTracker.cs" />
+    <Compile Include="monitor\vision\VisionAlarm.cs" />
+    <Compile Include="monitor\MonitorAlarmManager.cs" />
+    <Compile Include="common\ProcessQueue.cs" />
+    <Compile Include="config\Config.cs" />
+    <Compile Include="config\ConfigManager.cs" />
+    <Compile Include="config\monitor\MonitorConfig.cs" />
+    <Compile Include="config\monitor\MonitorType.cs" />
+    <Compile Include="config\videosource\VideoSourceType.cs" />
+    <Compile Include="config\monitor\VisionMonitorConfig.cs" />
+    <Compile Include="config\MonitorSystemContext.cs" />
+    <Compile Include="config\videosource\VideoSourceConfig.cs" />
+    <Compile Include="config\monitor\VisionUserConfig.cs" />
+    <Compile Include="monitor\vision\VisionMonitorAlarm.cs" />
+    <Compile Include="monitor\vision\VisionUser.cs" />
+    <Compile Include="monitor\Monitor.cs" />
+    <Compile Include="monitor\MonitorAlarm.cs" />
+    <Compile Include="monitor\MonitorManager.cs" />
+    <Compile Include="monitor\vision\VisionMonitor.cs" />
+    <Compile Include="network\RemoteManageClient.cs" />
+    <Compile Include="network\RemoteManageServer.cs" />
+    <Compile Include="system\localsystem\LocalSystem.cs" />
+    <Compile Include="system\MonitorSystem.cs" />
+    <Compile Include="config\RemoteConfigManager.cs" />
+    <Compile Include="system\remotesystem\RemoteSystem.cs" />
+    <Compile Include="system\remotesystem\RemoteSystemManager.cs" />
+    <Compile Include="scheduler\SchedulerManager.cs" />
+    <Compile Include="task\Task.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="scheduler\Scheduler.cs" />
+    <Compile Include="sdk\colorref.cs" />
+    <Compile Include="sdk\cvcore.cs" />
+    <Compile Include="sdk\cxtypes.cs" />
+    <Compile Include="sdk\highgui.cs" />
+    <Compile Include="sdk\VisionSDKWrap.cs" />
+    <Compile Include="sdk\win32.cs" />
+    <Compile Include="sdk\win32gdi.cs" />
+    <Compile Include="task\TaskManager.cs" />
+    <Compile Include="util\DateTimeUtil.cs" />
+    <Compile Include="util\ImageUtil.cs" />
+    <Compile Include="util\CommonUtil.cs" />
+    <Compile Include="util\StrUtil.cs" />
+    <Compile Include="util\ColorUtil.cs" />
+    <Compile Include="videosource\device\VideoDevice.cs" />
+    <Compile Include="videosource\file\FileVideoSource.cs" />
+    <Compile Include="videosource\ptz\PTZCtrl.cs" />
+    <Compile Include="videosource\reocrd\PlayRecordContext.cs" />
+    <Compile Include="videosource\reocrd\RecordManager.cs" />
+    <Compile Include="videosource\reocrd\SaveRecordContext.cs" />
+    <Compile Include="videosource\reocrd\ImageRecorder.cs" />
+    <Compile Include="videosource\reocrd\RecordContext.cs" />
+    <Compile Include="videosource\VideoSource.cs" />
+    <Compile Include="videosource\VideoSourceManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\encryptlib\encryptlib.csproj">
+      <Project>{15ED8772-06F4-47B4-BC56-0F8C547B7063}</Project>
+      <Name>encryptlib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\loglib\loglib.csproj">
+      <Project>{765F1640-5397-463D-850A-476B8D83E99B}</Project>
+      <Name>loglib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\netlib\netlib.csproj">
+      <Project>{09386657-9B8B-425C-B389-F66E35E6F081}</Project>
+      <Name>netlib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="config\ui\ConfigControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ConfigControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

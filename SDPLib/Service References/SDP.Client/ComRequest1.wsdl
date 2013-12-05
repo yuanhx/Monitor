@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:intf="http://request.gmcc.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:impl="http://request.gmcc.com" targetNamespace="http://request.gmcc.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types />
+  <wsdl:message name="callServiceResponse">
+    <wsdl:part name="callServiceReturn" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="callServiceRequest">
+    <wsdl:part name="in0" type="soapenc:string" />
+    <wsdl:part name="in1" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="routeServiceRequest">
+    <wsdl:part name="in0" type="soapenc:string" />
+    <wsdl:part name="in1" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="routeServiceResponse">
+    <wsdl:part name="routeServiceReturn" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:portType name="ComRequest">
+    <wsdl:operation name="routeService" parameterOrder="in0 in1">
+      <wsdl:input name="routeServiceRequest" message="impl:routeServiceRequest" />
+      <wsdl:output name="routeServiceResponse" message="impl:routeServiceResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="callService" parameterOrder="in0 in1">
+      <wsdl:input name="callServiceRequest" message="impl:callServiceRequest" />
+      <wsdl:output name="callServiceResponse" message="impl:callServiceResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ComRequestSoapBinding" type="impl:ComRequest">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="routeService">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="routeServiceRequest">
+        <wsdlsoap:body use="encoded" namespace="http://request.gmcc.com" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="routeServiceResponse">
+        <wsdlsoap:body use="encoded" namespace="http://request.gmcc.com" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="callService">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="callServiceRequest">
+        <wsdlsoap:body use="encoded" namespace="http://request.gmcc.com" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="callServiceResponse">
+        <wsdlsoap:body use="encoded" namespace="http://request.gmcc.com" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ComRequestService">
+    <wsdl:port name="ComRequest" binding="impl:ComRequestSoapBinding">
+      <wsdlsoap:address location="http://localhost:8181/SdpFrameworkWeb/services/ComRequest" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
