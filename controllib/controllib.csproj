@@ -1,0 +1,608 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C6BEF84F-2D24-4E57-AB33-9696B43EBE10}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>controllib</RootNamespace>
+    <AssemblyName>controllib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>http://localhost/controllib/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\test\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\test\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="visionlib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\test\Debug\visionlib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ctrls\AlarmQueueCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\AlarmQueueCtrl.Designer.cs">
+      <DependentUpon>AlarmQueueCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\AlertAreaConfigCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\AlertAreaConfigCtrl.designer.cs">
+      <DependentUpon>AlertAreaConfigCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\common\AlarmInfo.cs" />
+    <Compile Include="ctrls\common\BoxManager.cs" />
+    <Compile Include="ctrls\common\BoxManagerCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\common\BoxManagerCtrl.Designer.cs">
+      <DependentUpon>BoxManagerCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\common\CtrlUtil.cs" />
+    <Compile Include="ctrls\common\GuardArea.cs" />
+    <Compile Include="ctrls\common\LinkObject.cs" />
+    <Compile Include="ctrls\common\Shape.cs" />
+    <Compile Include="ctrls\common\ShapeManager.cs" />
+    <Compile Include="ctrls\AlarmRecordCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\AlarmRecordCtrl.Designer.cs">
+      <DependentUpon>AlarmRecordCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\common\SystemState.cs" />
+    <Compile Include="ctrls\common\WinAPI.cs" />
+    <Compile Include="ctrls\DateTimeShowCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\DateTimeShowCtrl.Designer.cs">
+      <DependentUpon>DateTimeShowCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\FilePlayer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\FilePlayer.Designer.cs">
+      <DependentUpon>FilePlayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\MonitorActionConfigCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\MonitorActionConfigCtrl.designer.cs">
+      <DependentUpon>MonitorActionConfigCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\MonitorConfigCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\MonitorConfigCtrl.Designer.cs">
+      <DependentUpon>MonitorConfigCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\MonitorBoxCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\MonitorBoxCtrl.Designer.cs">
+      <DependentUpon>MonitorBoxCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\common\UIDefault.cs" />
+    <Compile Include="ctrls\MonitorBoxManageCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\MonitorBoxManageCtrl.Designer.cs">
+      <DependentUpon>MonitorBoxManageCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\MonthPlanModeCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\MonthPlanModeCtrl.Designer.cs">
+      <DependentUpon>MonthPlanModeCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\RunPlanConfigCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\RunPlanConfigCtrl.Designer.cs">
+      <DependentUpon>RunPlanConfigCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\VideoPlayerManageCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\VideoPlayerManageCtrl.Designer.cs">
+      <DependentUpon>VideoPlayerManageCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\VisionParamConfigCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\VisionParamConfigCtrl.Designer.cs">
+      <DependentUpon>VisionParamConfigCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\WeekPlanModeCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\WeekPlanModeCtrl.Designer.cs">
+      <DependentUpon>WeekPlanModeCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormActionConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormActionConfig.Designer.cs">
+      <DependentUpon>FormActionConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormActionType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormActionType.Designer.cs">
+      <DependentUpon>FormActionType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormDesc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormDesc.Designer.cs">
+      <DependentUpon>FormDesc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormFileVSConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormFileVSConfig.Designer.cs">
+      <DependentUpon>FormFileVSConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormLocalSystemConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormLocalSystemConfig.Designer.cs">
+      <DependentUpon>FormLocalSystemConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormActionParamConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormActionParamConfig.Designer.cs">
+      <DependentUpon>FormActionParamConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormMonitorType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormMonitorType.Designer.cs">
+      <DependentUpon>FormMonitorType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormSchedulerType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormSchedulerType.Designer.cs">
+      <DependentUpon>FormSchedulerType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormTaskType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormTaskType.Designer.cs">
+      <DependentUpon>FormTaskType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormVideoSourceType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormVideoSourceType.Designer.cs">
+      <DependentUpon>FormVideoSourceType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormRoleConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormRoleConfig.Designer.cs">
+      <DependentUpon>FormRoleConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormSchedulerConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormSchedulerConfig.Designer.cs">
+      <DependentUpon>FormSchedulerConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormTaskConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormTaskConfig.Designer.cs">
+      <DependentUpon>FormTaskConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormUserConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormUserConfig.Designer.cs">
+      <DependentUpon>FormUserConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormUserPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormUserPassword.Designer.cs">
+      <DependentUpon>FormUserPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\AlarmBoxManageCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\AlarmBoxManageCtrl.Designer.cs">
+      <DependentUpon>AlarmBoxManageCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\AlarmPlayback.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\AlarmPlayback.Designer.cs">
+      <DependentUpon>AlarmPlayback.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\PlayBoxCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\PlayBoxCtrl.Designer.cs">
+      <DependentUpon>PlayBoxCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\PlayBoxManageCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\PlayBoxManageCtrl.Designer.cs">
+      <DependentUpon>PlayBoxManageCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\SchedulerConfigCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\SchedulerConfigCtrl.Designer.cs">
+      <DependentUpon>SchedulerConfigCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormConfigEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormConfigEdit.Designer.cs">
+      <DependentUpon>FormConfigEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormMonitorConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormMonitorConfig.Designer.cs">
+      <DependentUpon>FormMonitorConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormRemoteSystemConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormRemoteSystemConfig.Designer.cs">
+      <DependentUpon>FormRemoteSystemConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\ShapeDrawCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\ShapeDrawCtrl.Designer.cs">
+      <DependentUpon>ShapeDrawCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\VideoPlayer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\VideoPlayer.Designer.cs">
+      <DependentUpon>VideoPlayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormVisionParamConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormVisionParamConfig.Designer.cs">
+      <DependentUpon>FormVisionParamConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormBase.designer.cs">
+      <DependentUpon>FormBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormConfig.designer.cs">
+      <DependentUpon>FormConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormImage.Designer.cs">
+      <DependentUpon>FormImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FormSystemLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FormSystemLogin.Designer.cs">
+      <DependentUpon>FormSystemLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\config\FormVideoSourceConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\config\FormVideoSourceConfig.Designer.cs">
+      <DependentUpon>FormVideoSourceConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\functree\FuncTree.cs" />
+    <Compile Include="ctrls\functree\FuncTreeView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\functree\FuncTreeView.Designer.cs">
+      <DependentUpon>FuncTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ctrls\AlarmQueueCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AlarmQueueCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\AlarmRecordCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AlarmRecordCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\AlertAreaConfigCtrl.resx">
+      <DependentUpon>AlertAreaConfigCtrl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\common\BoxManagerCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BoxManagerCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\DateTimeShowCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DateTimeShowCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\FilePlayer.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FilePlayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\MonitorActionConfigCtrl.resx">
+      <DependentUpon>MonitorActionConfigCtrl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\MonitorBoxCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MonitorBoxCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\MonitorBoxManageCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MonitorBoxManageCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\MonitorConfigCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MonitorConfigCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\MonthPlanModeCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MonthPlanModeCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\RunPlanConfigCtrl.resx">
+      <DependentUpon>RunPlanConfigCtrl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\VideoPlayerManageCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>VideoPlayerManageCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\VisionParamConfigCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>VisionParamConfigCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\WeekPlanModeCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>WeekPlanModeCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormActionConfig.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormActionConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormActionType.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormActionType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormDesc.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormDesc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormFileVSConfig.resx">
+      <DependentUpon>FormFileVSConfig.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormLocalSystemConfig.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormLocalSystemConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormActionParamConfig.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormActionParamConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormMonitorType.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormMonitorType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormSchedulerType.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormSchedulerType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormTaskType.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormTaskType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormVideoSourceType.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormVideoSourceType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormRoleConfig.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormRoleConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormSchedulerConfig.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormSchedulerConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormTaskConfig.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormTaskConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormUserConfig.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormUserConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormUserPassword.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormUserPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\AlarmBoxManageCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AlarmBoxManageCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\AlarmPlayback.resx">
+      <DependentUpon>AlarmPlayback.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\PlayBoxCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PlayBoxCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\PlayBoxManageCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PlayBoxManageCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\SchedulerConfigCtrl.resx">
+      <DependentUpon>SchedulerConfigCtrl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormConfigEdit.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormConfigEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormMonitorConfig.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormMonitorConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormRemoteSystemConfig.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormRemoteSystemConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\ShapeDrawCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ShapeDrawCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\VideoPlayer.resx">
+      <DependentUpon>VideoPlayer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormVisionParamConfig.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormVisionParamConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormBase.resx">
+      <DependentUpon>FormBase.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormConfig.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormImage.resx">
+      <DependentUpon>FormImage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\FormSystemLogin.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormSystemLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\config\FormVideoSourceConfig.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormVideoSourceConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\functree\FuncTreeView.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FuncTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\停止.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\报警状态1.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\报警状态2.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\报警状态0.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\启动.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\错误.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
