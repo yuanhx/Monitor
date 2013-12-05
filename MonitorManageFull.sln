@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDPUILib", "SDPUILib\SDPUIL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "monitorlib", "monitorlib\monitorlib.csproj", "{45DE3191-A990-42D7-9969-E6AAFED6C64D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDPTestPro", "SDPTestPro\SDPTestPro.csproj", "{F47DB2F7-40C6-455D-B825-EC85704C1BD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,6 +169,16 @@ Global
 		{45DE3191-A990-42D7-9969-E6AAFED6C64D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{45DE3191-A990-42D7-9969-E6AAFED6C64D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{45DE3191-A990-42D7-9969-E6AAFED6C64D}.Release|x86.ActiveCfg = Release|Any CPU
+		{F47DB2F7-40C6-455D-B825-EC85704C1BD3}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F47DB2F7-40C6-455D-B825-EC85704C1BD3}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{F47DB2F7-40C6-455D-B825-EC85704C1BD3}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{F47DB2F7-40C6-455D-B825-EC85704C1BD3}.Debug|x86.ActiveCfg = Debug|x86
+		{F47DB2F7-40C6-455D-B825-EC85704C1BD3}.Debug|x86.Build.0 = Debug|x86
+		{F47DB2F7-40C6-455D-B825-EC85704C1BD3}.Release|Any CPU.ActiveCfg = Release|x86
+		{F47DB2F7-40C6-455D-B825-EC85704C1BD3}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{F47DB2F7-40C6-455D-B825-EC85704C1BD3}.Release|Mixed Platforms.Build.0 = Release|x86
+		{F47DB2F7-40C6-455D-B825-EC85704C1BD3}.Release|x86.ActiveCfg = Release|x86
+		{F47DB2F7-40C6-455D-B825-EC85704C1BD3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
