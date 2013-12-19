@@ -217,7 +217,7 @@ namespace VideoSource
             return null;
         }
 
-        public RecordFile GetRecordFile(string name)
+        public IRecordFile GetRecordFile(string name)
         {
             lock (mVideoDevices.SyncRoot)
             {
@@ -282,10 +282,10 @@ namespace VideoSource
             return (CHKDVRDevice)mVideoDevices[key];
         }
 
-        private void DoRecordFileDownProgress(string fileName, int progress)
+        private void DoRecordFileDownProgress(IRecordFile sender, int progress, DownState state)
         {
             if (OnRecordFileDownProgress != null)
-                OnRecordFileDownProgress(fileName, progress);
+                OnRecordFileDownProgress(sender, progress, state);
         }
     }
 }

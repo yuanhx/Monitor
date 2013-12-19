@@ -52,5 +52,27 @@ namespace monitorlib.Services
                 throw e;
             }
         }
+
+        public static DataTable GetOrgGroupEquipmentInfo(string orgId)
+        {
+            try
+            {
+                InParams inparams = SDPClient.NewInParams();
+                OutParams outparams = SDPClient.NewOutParams();
+
+                inparams.SetRequestBody("ServiceName", "com.sdp.monitor.services.MonitorServices");
+                inparams.SetRequestBody("ServiceItem", "GetOrgGroupEquipmentInfo");
+                inparams.SetRequestBody("OrgId", orgId);
+
+                SDPClient.CallService(inparams, outparams);
+
+                return outparams.GetTableParamValue("OrgGroupEquipmentInfo");
+            }
+            catch (Exception e)
+            {
+                System.Console.Out.WriteLine("MonitorServices.GetOrgGroupEquipmentInfo Exception: {0}", e);
+                throw e;
+            }
+        }
     }
 }

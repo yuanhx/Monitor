@@ -30,6 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button_download = new System.Windows.Forms.Button();
+            this.button_backplay = new System.Windows.Forms.Button();
+            this.button_getTree = new System.Windows.Forms.Button();
+            this.button_login = new System.Windows.Forms.Button();
             this.button_right = new System.Windows.Forms.Button();
             this.button_left = new System.Windows.Forms.Button();
             this.button_down = new System.Windows.Forms.Button();
@@ -39,6 +43,7 @@
             this.button_save = new System.Windows.Forms.Button();
             this.button_refrsh = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label_info = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -50,9 +55,9 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.button_login = new System.Windows.Forms.Button();
-            this.label_info = new System.Windows.Forms.Label();
-            this.button_getTree = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.dateTimePicker_begin = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker_end = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -70,6 +75,10 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.dateTimePicker_end);
+            this.panel1.Controls.Add(this.dateTimePicker_begin);
+            this.panel1.Controls.Add(this.button_download);
+            this.panel1.Controls.Add(this.button_backplay);
             this.panel1.Controls.Add(this.button_getTree);
             this.panel1.Controls.Add(this.button_login);
             this.panel1.Controls.Add(this.button_right);
@@ -83,12 +92,52 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(982, 61);
+            this.panel1.Size = new System.Drawing.Size(982, 76);
             this.panel1.TabIndex = 0;
+            // 
+            // button_download
+            // 
+            this.button_download.Location = new System.Drawing.Point(388, 41);
+            this.button_download.Name = "button_download";
+            this.button_download.Size = new System.Drawing.Size(75, 23);
+            this.button_download.TabIndex = 12;
+            this.button_download.Text = "Download";
+            this.button_download.UseVisualStyleBackColor = true;
+            this.button_download.Click += new System.EventHandler(this.button_download_Click);
+            // 
+            // button_backplay
+            // 
+            this.button_backplay.Location = new System.Drawing.Point(388, 12);
+            this.button_backplay.Name = "button_backplay";
+            this.button_backplay.Size = new System.Drawing.Size(75, 23);
+            this.button_backplay.TabIndex = 11;
+            this.button_backplay.Text = "BackPlay";
+            this.button_backplay.UseVisualStyleBackColor = true;
+            this.button_backplay.Click += new System.EventHandler(this.button_backplay_Click);
+            // 
+            // button_getTree
+            // 
+            this.button_getTree.Location = new System.Drawing.Point(95, 41);
+            this.button_getTree.Name = "button_getTree";
+            this.button_getTree.Size = new System.Drawing.Size(75, 23);
+            this.button_getTree.TabIndex = 10;
+            this.button_getTree.Text = "GetTree";
+            this.button_getTree.UseVisualStyleBackColor = true;
+            this.button_getTree.Click += new System.EventHandler(this.button_getTree_Click);
+            // 
+            // button_login
+            // 
+            this.button_login.Location = new System.Drawing.Point(14, 41);
+            this.button_login.Name = "button_login";
+            this.button_login.Size = new System.Drawing.Size(75, 23);
+            this.button_login.TabIndex = 9;
+            this.button_login.Text = "Login";
+            this.button_login.UseVisualStyleBackColor = true;
+            this.button_login.Click += new System.EventHandler(this.button_login_Click);
             // 
             // button_right
             // 
-            this.button_right.Location = new System.Drawing.Point(873, 28);
+            this.button_right.Location = new System.Drawing.Point(933, 28);
             this.button_right.Name = "button_right";
             this.button_right.Size = new System.Drawing.Size(39, 23);
             this.button_right.TabIndex = 8;
@@ -99,7 +148,7 @@
             // 
             // button_left
             // 
-            this.button_left.Location = new System.Drawing.Point(833, 28);
+            this.button_left.Location = new System.Drawing.Point(893, 28);
             this.button_left.Name = "button_left";
             this.button_left.Size = new System.Drawing.Size(39, 23);
             this.button_left.TabIndex = 7;
@@ -110,7 +159,7 @@
             // 
             // button_down
             // 
-            this.button_down.Location = new System.Drawing.Point(796, 28);
+            this.button_down.Location = new System.Drawing.Point(856, 28);
             this.button_down.Name = "button_down";
             this.button_down.Size = new System.Drawing.Size(37, 23);
             this.button_down.TabIndex = 6;
@@ -121,7 +170,7 @@
             // 
             // button_up
             // 
-            this.button_up.Location = new System.Drawing.Point(764, 28);
+            this.button_up.Location = new System.Drawing.Point(824, 28);
             this.button_up.Name = "button_up";
             this.button_up.Size = new System.Drawing.Size(31, 23);
             this.button_up.TabIndex = 5;
@@ -132,7 +181,7 @@
             // 
             // button_getImage
             // 
-            this.button_getImage.Location = new System.Drawing.Point(553, 28);
+            this.button_getImage.Location = new System.Drawing.Point(743, 28);
             this.button_getImage.Name = "button_getImage";
             this.button_getImage.Size = new System.Drawing.Size(75, 23);
             this.button_getImage.TabIndex = 3;
@@ -142,18 +191,18 @@
             // 
             // button_play
             // 
-            this.button_play.Location = new System.Drawing.Point(463, 28);
+            this.button_play.Location = new System.Drawing.Point(291, 28);
             this.button_play.Name = "button_play";
             this.button_play.Size = new System.Drawing.Size(75, 23);
             this.button_play.TabIndex = 2;
-            this.button_play.Text = "Play";
+            this.button_play.Text = "RealPlay";
             this.button_play.UseVisualStyleBackColor = true;
             this.button_play.Click += new System.EventHandler(this.button_play_Click);
             // 
             // button_save
             // 
             this.button_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_save.Location = new System.Drawing.Point(144, 28);
+            this.button_save.Location = new System.Drawing.Point(95, 12);
             this.button_save.Name = "button_save";
             this.button_save.Size = new System.Drawing.Size(75, 23);
             this.button_save.TabIndex = 1;
@@ -163,7 +212,7 @@
             // 
             // button_refrsh
             // 
-            this.button_refrsh.Location = new System.Drawing.Point(48, 28);
+            this.button_refrsh.Location = new System.Drawing.Point(14, 12);
             this.button_refrsh.Name = "button_refrsh";
             this.button_refrsh.Size = new System.Drawing.Size(75, 23);
             this.button_refrsh.TabIndex = 0;
@@ -180,13 +229,22 @@
             this.panel2.Size = new System.Drawing.Size(982, 30);
             this.panel2.TabIndex = 1;
             // 
+            // label_info
+            // 
+            this.label_info.AutoSize = true;
+            this.label_info.Location = new System.Drawing.Point(12, 9);
+            this.label_info.Name = "label_info";
+            this.label_info.Size = new System.Drawing.Size(41, 12);
+            this.label_info.TabIndex = 0;
+            this.label_info.Text = "label1";
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.tabControl1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 61);
+            this.panel3.Location = new System.Drawing.Point(0, 76);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(982, 361);
+            this.panel3.Size = new System.Drawing.Size(982, 346);
             this.panel3.TabIndex = 2;
             // 
             // tabControl1
@@ -198,7 +256,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(982, 361);
+            this.tabControl1.Size = new System.Drawing.Size(982, 346);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -229,7 +287,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 21);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(974, 336);
+            this.tabPage2.Size = new System.Drawing.Size(974, 321);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -247,23 +305,24 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.videoPlayerManageCtrl1);
-            this.splitContainer1.Size = new System.Drawing.Size(968, 330);
+            this.splitContainer1.Size = new System.Drawing.Size(968, 315);
             this.splitContainer1.SplitterDistance = 280;
             this.splitContainer1.TabIndex = 0;
             // 
             // dataTreeView1
             // 
             this.dataTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataTreeView1.IdField = "F_EQUIPMENT_ID";
+            this.dataTreeView1.IdField = "id";
             this.dataTreeView1.ImageField = "";
             this.dataTreeView1.Location = new System.Drawing.Point(0, 0);
             this.dataTreeView1.Name = "dataTreeView1";
-            this.dataTreeView1.PIdField = "F_PID";
+            this.dataTreeView1.PIdField = "pid";
             this.dataTreeView1.RootPIdValue = "0";
-            this.dataTreeView1.Size = new System.Drawing.Size(280, 330);
+            this.dataTreeView1.Size = new System.Drawing.Size(280, 315);
             this.dataTreeView1.TabIndex = 0;
             this.dataTreeView1.Table = null;
-            this.dataTreeView1.TextField = "F_NAME";
+            this.dataTreeView1.TextField = "desc";
+            this.dataTreeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.dataTreeView1_NodeMouseDoubleClick);
             // 
             // videoPlayerManageCtrl1
             // 
@@ -274,7 +333,7 @@
             this.videoPlayerManageCtrl1.Name = "videoPlayerManageCtrl1";
             this.videoPlayerManageCtrl1.ShowIndex = -1;
             this.videoPlayerManageCtrl1.ShowMode = "0X0";
-            this.videoPlayerManageCtrl1.Size = new System.Drawing.Size(684, 330);
+            this.videoPlayerManageCtrl1.Size = new System.Drawing.Size(684, 315);
             this.videoPlayerManageCtrl1.TabIndex = 1;
             // 
             // tabPage3
@@ -304,34 +363,27 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // button_login
+            // saveFileDialog1
             // 
-            this.button_login.Location = new System.Drawing.Point(382, 28);
-            this.button_login.Name = "button_login";
-            this.button_login.Size = new System.Drawing.Size(75, 23);
-            this.button_login.TabIndex = 9;
-            this.button_login.Text = "Login";
-            this.button_login.UseVisualStyleBackColor = true;
-            this.button_login.Click += new System.EventHandler(this.button_login_Click);
+            this.saveFileDialog1.DefaultExt = "mp4";
             // 
-            // label_info
+            // dateTimePicker_begin
             // 
-            this.label_info.AutoSize = true;
-            this.label_info.Location = new System.Drawing.Point(12, 9);
-            this.label_info.Name = "label_info";
-            this.label_info.Size = new System.Drawing.Size(41, 12);
-            this.label_info.TabIndex = 0;
-            this.label_info.Text = "label1";
+            this.dateTimePicker_begin.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            this.dateTimePicker_begin.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker_begin.Location = new System.Drawing.Point(478, 14);
+            this.dateTimePicker_begin.Name = "dateTimePicker_begin";
+            this.dateTimePicker_begin.Size = new System.Drawing.Size(167, 21);
+            this.dateTimePicker_begin.TabIndex = 13;
             // 
-            // button_getTree
+            // dateTimePicker_end
             // 
-            this.button_getTree.Location = new System.Drawing.Point(274, 28);
-            this.button_getTree.Name = "button_getTree";
-            this.button_getTree.Size = new System.Drawing.Size(75, 23);
-            this.button_getTree.TabIndex = 10;
-            this.button_getTree.Text = "GetTree";
-            this.button_getTree.UseVisualStyleBackColor = true;
-            this.button_getTree.Click += new System.EventHandler(this.button_getTree_Click);
+            this.dateTimePicker_end.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            this.dateTimePicker_end.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker_end.Location = new System.Drawing.Point(478, 41);
+            this.dateTimePicker_end.Name = "dateTimePicker_end";
+            this.dateTimePicker_end.Size = new System.Drawing.Size(167, 21);
+            this.dateTimePicker_end.TabIndex = 14;
             // 
             // FormDemo
             // 
@@ -389,6 +441,11 @@
         private System.Windows.Forms.Button button_login;
         private System.Windows.Forms.Label label_info;
         private System.Windows.Forms.Button button_getTree;
+        private System.Windows.Forms.Button button_backplay;
+        private System.Windows.Forms.Button button_download;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.DateTimePicker dateTimePicker_end;
+        private System.Windows.Forms.DateTimePicker dateTimePicker_begin;
     }
 }
 

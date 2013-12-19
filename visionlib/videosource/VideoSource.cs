@@ -13,6 +13,7 @@ using MonitorSystem;
 using Popedom;
 using Common;
 using VideoDevice;
+using System.IO;
 
 namespace VideoSource
 {
@@ -54,10 +55,21 @@ namespace VideoSource
         Push = 1	//推模式
     }
 
+    //运行模式
+    public enum DownState
+    {
+        None = 0,           //初始
+        Norme = 1,	        //正常 
+        ProgressError = 2,  //进度错误
+        DriveError = 3,	    //磁盘错误
+        OtherError = 9      //其它未知错误
+    }
+
     //播放状态：   -1 未初始化； 0 准备播放； 1 播放中； 2 停止； 3 暂停； 4 播放完成；
     //视频源状态：  0 正常； 1 网络故障； 2 无信号
     public delegate void PLAYSTATUS_CHANGED(IMonitorSystemContext context, string vsName, VideoSourceState vsStatus, PlayState playStatus);
     public delegate void KERNELSTATUS_CHANGED(IMonitorSystemContext context, string vsName, VideoSourceKernelState vsStatus);
+    public delegate void RECORDFILE_DOWNPROGRESS(IRecordFile sender, int progress, DownState state);
 
     public enum TShowOSDType
     {
@@ -141,9 +153,11 @@ namespace VideoSource
 
     public interface IBackPlayer : IVideoSource
     {
+        IRecordFile RecordFile { get; }
+
         int PlayFrame { get; }
         DateTime PlayTime { get; }
-        bool IsMute { get; set; }
+        bool IsMute { get; set; }        
 
         bool Fast();    //快放
         bool Slow();    //慢放
@@ -152,6 +166,337 @@ namespace VideoSource
         bool Pause();   //暂停播放
         bool Resum();   //恢复播放
         bool Locate(DateTime time);
+        
+        bool StartDownload(DateTime startTime, DateTime stopTime, string localFileName);
+        bool StartDownload(string localFileName);
+        bool StopDownLoad();
+
+        event RECORDFILE_DOWNPROGRESS OnDownProgress;
+    }
+
+    public interface IRecordFile : IProperty, IDisposable
+    {
+        IVideoDevice Device { get; }
+
+        int Progress { get; }
+        bool IsDownloading { get; }        
+        bool IsDownloadFromFile { get; }
+
+        int Channel { get; set; }
+        DateTime StartTime { get; set; }
+        DateTime StopTime { get; set; }
+        
+        string RemoteFileName { get; set; }
+        string LocalFileName { get; set; }
+
+        bool Download(int channel, DateTime startTime, DateTime stopTime, string localFileName);
+        bool Download(string remoteFileName, string localFileName);
+        bool Download(string localFileName);
+        bool Download();
+        bool Stop();
+
+        event RECORDFILE_DOWNPROGRESS OnDownProgress;
+    }
+
+    public class CRecordFile : CProperty, IRecordFile
+    {
+        private DriveInfo mDrive = null;
+        private long mCurSkipCount = 0;
+
+        private IVideoDevice mVideoDevice = null;
+        private int mProgress = -1;
+
+        private System.Windows.Forms.Timer mTimer = new System.Windows.Forms.Timer();
+
+        public event RECORDFILE_DOWNPROGRESS OnDownProgress = null;
+
+        public CRecordFile(IVideoDevice device)
+            : base()
+        {
+            mVideoDevice = device;
+
+            mTimer.Enabled = false;
+            mTimer.Interval = 1000;
+            mTimer.Tick += new EventHandler(OnTimerTick);
+        }
+
+        ~CRecordFile()
+        {
+            Stop();
+            mTimer.Dispose();
+        }
+
+        #region IDisposable 成员
+
+        public virtual void Dispose()
+        {
+            Stop();
+            mTimer.Dispose();
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        #region IRecordFile 成员
+
+        public IVideoDevice Device
+        {
+            get { return mVideoDevice; }
+        }
+
+        public bool IsDownloading
+        {
+            get { return this.BoolValue("IsDownloading"); }
+            private set
+            {
+                this.SetValue("IsDownloading", value);
+            }
+        }
+
+        public int Progress
+        {
+            get { return mProgress; }
+            protected set
+            {
+                if (mProgress != value)
+                {
+                    mProgress = value;
+
+                    if (mProgress >= 0 && mProgress <= 100)
+                    {
+                        if (CheckDiskFreeSpace())
+                        {
+                            this.DoDownProgress(mProgress, DownState.Norme);
+
+                            if (mProgress == 100) Stop();
+                        }
+                        else
+                        {
+                            this.DoDownProgress(mProgress, DownState.DriveError);
+
+                            Stop();
+                        }
+                    }
+                    else
+                    {
+                        this.DoDownProgress(mProgress, DownState.ProgressError);
+
+                        Stop();
+                    }
+                }
+            }
+        }
+
+        private void DoDownProgress(int progress, DownState state)
+        {
+            CLocalSystem.WriteInfoLog(string.Format("\"{0}\"下载进度：{1}% 状态：{2}", LocalFileName, progress, state));
+
+            if (OnDownProgress != null)
+                OnDownProgress(this, mProgress, state);
+            else if (progress == 100)
+                MessageBox.Show(string.Format("文件（{0}）下载结束！", this.LocalFileName));
+        }        
+
+        private void OnTimerTick(Object sender, EventArgs e)
+        {
+            mTimer.Enabled = false;
+            try
+            {
+                if (IsDownloading)
+                {
+                    Progress = GetProgress();
+                }
+            }
+            finally
+            {
+                if (Progress >= 0 && Progress < 100)
+                    mTimer.Enabled = IsDownloading;
+            }
+        }
+
+        public int Channel
+        {
+            get { return this.IntValue("Channel"); }
+            set { this.SetValue("Channel", value); }
+        }
+
+        public DateTime StartTime
+        {
+            get { return this.DateTimeValue("StartTime"); }
+            set { this.SetValue("StartTime", value); }
+        }
+
+        public DateTime StopTime
+        {
+            get { return this.DateTimeValue("StopTime"); }
+            set { this.SetValue("StopTime", value); }
+        }
+
+        public string LocalFileName
+        {
+            get { return this.StrValue("LocalFileName"); }
+            set { this.SetValue("LocalFileName", value); }
+        }
+
+        public string RemoteFileName
+        {
+            get { return this.StrValue("RemoteFileName"); }
+            set { this.SetValue("RemoteFileName", value); }
+        }
+
+        public bool IsDownloadFromFile
+        {
+            get { return this.BoolValue("IsDownloadFromFile"); }
+            private set
+            {
+                this.SetValue("IsDownloadFromFile", value);
+            }
+        }
+
+        public bool Download(string remoteFileName, string localFileName)
+        {
+            LocalFileName = localFileName;
+            RemoteFileName = remoteFileName;
+
+            return Download();
+        }
+
+        public bool Download(int channel, DateTime startTime, DateTime stopTime, string localFileName)
+        {
+            Channel = channel;
+            StartTime = startTime;
+            StopTime = stopTime;
+            LocalFileName = localFileName;
+            RemoteFileName = "";
+
+            return Download();
+        }
+
+        public bool Download(string localFileName)
+        {
+            LocalFileName = localFileName;
+            return Download();
+        }
+
+        public bool Download()
+        {
+            if (Device != null && Device.IsLogin && !IsDownloading)
+            {
+                mProgress = -1;
+
+                string remoteFileName = RemoteFileName.Trim();
+                if (!remoteFileName.Equals(""))
+                {
+                    if (DoDownloadFromFile(remoteFileName))
+                    {
+                        mDrive = GetDriveInfo(LocalFileName);
+                        mCurSkipCount = 0;
+
+                        IsDownloadFromFile = true;
+                        IsDownloading = true;
+                        mTimer.Enabled = true;
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (DoDownloadFromTime(StartTime, StopTime))
+                    {
+                        mDrive = GetDriveInfo(LocalFileName);
+                        mCurSkipCount = 0;
+
+                        IsDownloadFromFile = false;
+                        IsDownloading = true;
+                        mTimer.Enabled = true;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        protected virtual bool DoDownloadFromTime(DateTime startTime, DateTime stopTime)
+        {
+            return false;
+        }
+
+        protected virtual bool DoDownloadFromFile(string remoteFileName)
+        {
+            return false;
+        }
+
+        protected virtual int GetProgress()
+        {
+            return -1;
+        }
+
+        public bool Stop()
+        {
+            if (IsDownloading)
+            {
+                if (DoStop())
+                {
+                    IsDownloading = false;
+                    mTimer.Enabled = false;
+                    mCurSkipCount = 0;
+                    mDrive = null;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        protected virtual bool DoStop()
+        {
+            return false;
+        }
+
+        #endregion
+
+        public static DriveInfo GetDriveInfo(string path)
+        {
+            if (path != null)
+            {
+                if (path == "")
+                    path = Application.ExecutablePath;
+
+                DriveInfo[] drives = System.IO.DriveInfo.GetDrives();
+                foreach (System.IO.DriveInfo drive in drives)
+                {
+                    if (drive.Name == Directory.GetDirectoryRoot(path))
+                    {
+                        if (drive.DriveType != DriveType.CDRom)
+                        {
+                            while (!drive.IsReady)
+                                System.Threading.Thread.Sleep(10);
+
+                            return drive;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        protected bool CheckDiskFreeSpace()
+        {
+            if (mCurSkipCount > 0)
+            {
+                mCurSkipCount--;
+                return true;
+            }
+            else if (mDrive != null && mDrive.IsReady)
+            {
+                long n = mDrive.TotalFreeSpace / 1048576; //1M = 1024 * 1024
+                if (n > 1)
+                {
+                    mCurSkipCount = n / 3;
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 
     public abstract class CVideoSource : CPopedom, IVideoSource, IKernelVideoSource
@@ -167,6 +512,7 @@ namespace VideoSource
         private IVideoSourceConfig mConfig = null;
 
         private IPTZCtrl mPTZCtrl = null;
+        private IRecordFile mRecordFile = null;
 
         private object mTarget = null;
         private IntPtr mHWnd = IntPtr.Zero;
@@ -186,6 +532,7 @@ namespace VideoSource
         public event KERNELSTATUS_CHANGED OnKernelStatus = null;
         public event PLAYSTATUS_CHANGED OnPlayStatusChanged = null;
         public event RECORD_PROGRESS OnRecordProgress = null;
+        public event RECORDFILE_DOWNPROGRESS OnDownProgress = null;
 
         public CVideoSource(IVideoSourceConfig config, IVideoDevice device, IVideoSourceFactory factory)
             : base()
@@ -254,6 +601,15 @@ namespace VideoSource
             protected set
             {
                 mPTZCtrl = value;
+            }
+        }
+
+        public IRecordFile RecordFile
+        {
+            get { return mRecordFile; }
+            protected set
+            {
+                mRecordFile = value;
             }
         }
 
@@ -862,6 +1218,39 @@ namespace VideoSource
                         break;
                 }
             }
+        }
+
+        public bool StartDownload(DateTime startTime, DateTime stopTime, string localFileName)
+        {
+            if (RecordFile != null)
+            {
+                return RecordFile.Download(Config.Channel, startTime, stopTime, localFileName);
+            }
+            return false;
+        }
+
+        public bool StartDownload(string localFileName)
+        {
+            if (RecordFile != null)
+            {
+                return RecordFile.Download(localFileName);
+            }
+            return false;
+        }
+
+        public bool StopDownLoad()
+        {
+            if (RecordFile != null)
+            {
+                return RecordFile.Stop();
+            }
+            return false;
+        }
+
+        protected void DoDownProgress(IRecordFile sender, int progress, DownState state)
+        {
+            if (OnDownProgress != null)
+                OnDownProgress(sender, progress, state);
         }
     }
 }

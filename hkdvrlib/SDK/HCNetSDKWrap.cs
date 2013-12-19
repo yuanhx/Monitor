@@ -621,6 +621,10 @@ namespace HKSDK
         [DllImport(SDKDll, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi, SetLastError = true)]
         public extern static bool NET_DVR_StopPlayBackSave(int lPlayHandle);
 
+        //获取回放的进度
+        [DllImport(SDKDll, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Auto, SetLastError = true)]
+        public extern static int NET_DVR_GetPlayBackPos(int lFileHandle);
+
         //设置回调函数，用户自己处理码流数据
         [DllImport(SDKDll, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi, SetLastError = true)]
         public extern static bool NET_DVR_SetPlayDataCallBack(int lPlayHandle, PLAY_DATA_CALLBACK PlayDataCallBack, int dwUser);

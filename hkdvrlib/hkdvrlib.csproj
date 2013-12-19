@@ -74,38 +74,41 @@
     <Compile Include="Monitor\HKDVRMonitorConfig.cs" />
     <Compile Include="Monitor\HKDVRMonitorParamConfig.cs" />
     <Compile Include="SDK\StreamMediaClientSDKWrap.cs" />
-    <Compile Include="VideoSource\Card\CardNetPlayer.cs" />
-    <Compile Include="VideoSource\Card\CardPlayer.cs" />
-    <Compile Include="VideoSource\DVR\AlarmCtrl.cs" />
-    <Compile Include="VideoSource\DVR\FormHKBackVSConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VideoSource\DVR\FormHKBackVSConfig.designer.cs">
-      <DependentUpon>FormHKBackVSConfig.cs</DependentUpon>
-    </Compile>
-    <Compile Include="VideoSource\DVR\FormHKRealVSConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VideoSource\DVR\FormHKRealVSConfig.designer.cs">
-      <DependentUpon>FormHKRealVSConfig.cs</DependentUpon>
-    </Compile>
-    <Compile Include="VideoSource\DVR\HKDefine.cs" />
-    <Compile Include="VideoSource\DVR\HKDVRBackPlayerFactory.cs" />
-    <Compile Include="VideoSource\DVR\HKDVRDevice.cs" />
-    <Compile Include="VideoSource\DVR\HKDVRRealPlayerFactory.cs" />
-    <Compile Include="VideoSource\DVR\HKDVRVideoSource.cs" />
-    <Compile Include="VideoSource\DVR\HKMP4Play.cs" />
-    <Compile Include="VideoSource\DVR\HKPTZCtrl.cs" />
-    <Compile Include="VideoSource\DVR\ImageDrawer.cs" />
-    <Compile Include="VideoSource\DVR\MP4Play.cs" />
     <Compile Include="VideoSource\File\FormHKFileVSConfig.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="VideoSource\File\FormHKFileVSConfig.Designer.cs">
       <DependentUpon>FormHKFileVSConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="VideoSource\DVR\FormHKRealVSConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VideoSource\DVR\FormHKRealVSConfig.Designer.cs">
+      <DependentUpon>FormHKRealVSConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VideoSource\DVR\FormHKBackVSConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VideoSource\DVR\FormHKBackVSConfig.Designer.cs">
+      <DependentUpon>FormHKBackVSConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VideoSource\DVR\HKDVRBackPlayerFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VideoSource\DVR\HKDVRRealPlayerFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VideoSource\DVR\HKDVRDevice.cs" />
+    <Compile Include="VideoSource\DVR\HKMP4Play.cs" />
+    <Compile Include="VideoSource\DVR\MP4Play.cs" />
+    <Compile Include="VideoSource\DVR\HKPTZCtrl.cs" />
     <Compile Include="Ctrls\SunKeyCtrl.cs" />
+    <Compile Include="VideoSource\DVR\AlarmCtrl.cs" />
     <Compile Include="SDK\HikClientSDKWrap.cs" />
+    <Compile Include="VideoSource\Card\CardNetPlayer.cs" />
+    <Compile Include="VideoSource\DVR\HKDefine.cs" />
+    <Compile Include="VideoSource\Card\CardPlayer.cs" />
+    <Compile Include="VideoSource\DVR\HKDVRVideoSource.cs" />
     <Compile Include="VideoSource\File\HKFilePlayer.cs" />
     <Compile Include="Ctrls\BackPlayer.cs">
       <SubType>UserControl</SubType>
@@ -113,6 +116,7 @@
     <Compile Include="Ctrls\BackPlayer.Designer.cs">
       <DependentUpon>BackPlayer.cs</DependentUpon>
     </Compile>
+    <Compile Include="VideoSource\DVR\ImageDrawer.cs" />
     <Compile Include="SDK\DS40xxSDKWrap.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -142,11 +146,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="VideoSource\DVR\FormHKBackVSConfig.resx">
-      <DependentUpon>FormHKBackVSConfig.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="VideoSource\DVR\FormHKRealVSConfig.resx">
       <DependentUpon>FormHKRealVSConfig.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VideoSource\DVR\FormHKBackVSConfig.resx">
+      <DependentUpon>FormHKBackVSConfig.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

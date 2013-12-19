@@ -22,7 +22,6 @@ using VideoDevice;
 
 namespace HKDevice
 {
-    public delegate void RECORDFILE_DOWNPROGRESS(string fileName, int progress);
     public delegate void WORKSTATUS_CHECK(ref WorkStatus status);
 
     //波特率(bps)
@@ -856,113 +855,38 @@ namespace HKDevice
         }
     }
 
-    public class RecordFile : IDisposable
+    public interface IHKDVRRecordFile
     {
-        private CHKDVRDevice mDevice = null;
-        private int mFileKey = -1;
+
+    }
+
+    public class CHKDVRRecordFile : CRecordFile, IHKDVRRecordFile
+    {
+        private object mLockObj = new object();
+
         private int mFileHandle = -1;
-        private string mDownLoadFileName = "";
 
-        private DriveInfo mDrive = null;
-        private long mCurSkipCount = 0;
-
-        private System.Windows.Forms.Timer mTimer = new System.Windows.Forms.Timer();
-
-        public event RECORDFILE_DOWNPROGRESS OnDownProgress = null;
-
-        public RecordFile(CHKDVRDevice device)
+        public CHKDVRRecordFile(CHKDVRDevice device)
+            : base(device)
         {
-            mFileKey = CHKDVRDevice.GetNewKey();
-            mDevice = device;
 
-            mTimer.Enabled = false;
-            mTimer.Interval = 1000;
-            mTimer.Tick += new EventHandler(OnTimerTick);
         }
 
-        public void Dispose()
+        private CHKDVRDevice HKDVRDevice
         {
-            Stop();
-            mDevice = null;
-            mTimer.Dispose();
+            get { return Device as CHKDVRDevice; }
         }
 
-        public string Key
-        {
-            get { return string.Format("FileKey_{0}", FileKey); }
-        }
-
-        public int FileKey
-        {
-            get { return mFileKey; }
-        }
-
-        public int FileHandle
+        private int FileHandle
         {
             get { return mFileHandle; }
         }
 
-        public string DownLoadFileName
+        protected override bool DoDownloadFromTime(DateTime startTime, DateTime stopTime)
         {
-            get { return mDownLoadFileName; }
-        }
-
-        public bool IsDownloading
-        {
-            get 
+            lock (mLockObj)
             {
-                lock (this)
-                {
-                    return mDevice.IsLogin && mFileHandle > -1;
-                }
-            }
-        }
-
-        private void DoProgress(int progress)
-        {
-            //System.Console.Out.WriteLine(DownLoadFileName + "=" + progress + "%");
-
-            if (progress >= 0 && progress <= 100)
-            {
-                if (CheckDiskFreeSpace())
-                {
-                    if (OnDownProgress != null)
-                        OnDownProgress(DownLoadFileName, progress);
-
-                    if (progress == 100) Stop();
-                }
-                else
-                {                    
-                    if (OnDownProgress != null)
-                        OnDownProgress(DownLoadFileName, -100);
-
-                    Stop();
-                }
-            }
-            else Stop();
-        }
-
-        private void OnTimerTick(Object sender, EventArgs e)
-        {
-            mTimer.Enabled = false;
-            try
-            {
-                if (IsDownloading)
-                {
-                    DoProgress(Progress());                   
-                }
-            }
-            finally
-            {
-                mTimer.Enabled = IsDownloading;
-            }
-        }
-
-        public bool Download(int channel, ref DateTime startTime, ref DateTime stopTime, string fileName)
-        {
-            lock (this)
-            {
-                if (mDevice.IsLogin && mFileHandle < 0)
+                if (mFileHandle < 0)
                 {
                     HCNetSDKWrap.NET_DVR_TIME curStartTime = new HCNetSDKWrap.NET_DVR_TIME();
                     curStartTime.dwYear = startTime.Year;
@@ -980,79 +904,93 @@ namespace HKDevice
                     curStopTime.dwMinute = stopTime.Minute;
                     curStopTime.dwSecond = stopTime.Second;
 
-                    mFileHandle = HCNetSDKWrap.NET_DVR_GetFileByTime(mDevice.UserID, channel, ref curStartTime, ref curStopTime, fileName);
+                    mFileHandle = HCNetSDKWrap.NET_DVR_GetFileByTime(HKDVRDevice.UserID, Channel, ref curStartTime, ref curStopTime, LocalFileName);
 
                     if (mFileHandle > -1)
                     {
-                        int outValue = 0;
+                        int outValue = -1;
+
                         if (HCNetSDKWrap.NET_DVR_PlayBackControl(mFileHandle, HCNetSDKWrap.NET_DVR_PLAYSTART, 0, ref outValue))
-                        {                            
-                            mDownLoadFileName = fileName;
-                            mDrive = GetDriveInfo(mDownLoadFileName);
-                            mCurSkipCount = 0;
-                            mTimer.Enabled = true;
+                        {
+                            CLocalSystem.WriteInfoLog(string.Format("{0} 总帧数：{1}", LocalFileName, outValue));
                             return true;
                         }
-                        else HCNetSDKWrap.NET_DVR_StopGetFile(mFileHandle);
+                        else
+                        {
+                            try
+                            {
+                                HKDVRException hke = new HKDVRException("启动下载失败");
+                                CLocalSystem.WriteErrorLog(string.Format("{0} {0}", LocalFileName, hke.Message));
+                            }
+                            finally
+                            {
+                                HCNetSDKWrap.NET_DVR_StopGetFile(mFileHandle);
+                            }
+                        }
+
                         mFileHandle = -1;
+                    }
+                    else
+                    {
+                        HKDVRException hke = new HKDVRException("按时间获取下载文件句柄失败");
+                        CLocalSystem.WriteErrorLog(string.Format("{0} {1}", LocalFileName, hke.Message));
                     }
                 }
             }
             return false;
         }
 
-        public bool Download(string sFileName, string dFileName)
+        protected override bool DoDownloadFromFile(string remoteFileName)
         {
-            lock (this)
+            lock (mLockObj)
             {
-                if (mDevice.IsLogin && mFileHandle < 0)
+                if (mFileHandle < 0)
                 {
-                    mFileHandle = HCNetSDKWrap.NET_DVR_GetFileByName(mDevice.UserID, sFileName, dFileName);
+                    mFileHandle = HCNetSDKWrap.NET_DVR_GetFileByName(HKDVRDevice.UserID, remoteFileName, LocalFileName);
 
                     if (mFileHandle > -1)
                     {
-                        int outValue = 0;
+                        int outValue = -1;
+
                         if (HCNetSDKWrap.NET_DVR_PlayBackControl(mFileHandle, HCNetSDKWrap.NET_DVR_PLAYSTART, 0, ref outValue))
                         {
-                            mDownLoadFileName = dFileName;
-                            mDrive = GetDriveInfo(mDownLoadFileName);
-                            mCurSkipCount = 0;
-                            mTimer.Enabled = true;
+                            CLocalSystem.WriteInfoLog(string.Format("{0} 总帧数：{1}", LocalFileName, outValue));
                             return true;
                         }
-                        else HCNetSDKWrap.NET_DVR_StopGetFile(mFileHandle);
+                        else
+                        {
+                            try
+                            {
+                                HKDVRException hke = new HKDVRException("启动下载失败");
+                                CLocalSystem.WriteErrorLog(string.Format("{0} {0}", LocalFileName, hke.Message));
+                            }
+                            finally
+                            {
+                                HCNetSDKWrap.NET_DVR_StopGetFile(mFileHandle);
+                            }
+                        }
+
                         mFileHandle = -1;
+                    }
+                    else
+                    {
+                        HKDVRException hke = new HKDVRException("按文件获取下载文件句柄失败");
+                        CLocalSystem.WriteErrorLog(string.Format("{0} {1}", LocalFileName, hke.Message));
                     }
                 }
             }            
             return false;
         }
 
-        public int Progress()
+        protected override bool DoStop()
         {
-            lock (this)
+            lock (mLockObj)
             {
-                if (mDevice.IsLogin && mFileHandle > -1)
-                {
-                    return HCNetSDKWrap.NET_DVR_GetDownloadPos(mFileHandle);
-                }                
-            }
-            return -1;
-        }
-
-        public bool Stop()
-        {
-            lock (this)
-            {
-                if (mDevice.IsLogin && mFileHandle > -1)
+                if (mFileHandle > -1)
                 {
                     if (HCNetSDKWrap.NET_DVR_StopGetFile(mFileHandle))
                     {
                         mFileHandle = -1;
-                        mDownLoadFileName = "";
-                        mCurSkipCount = 0;
-                        mDrive = null;
-                        mTimer.Enabled = false;
                         return true;
                     }
                 }
@@ -1060,50 +998,22 @@ namespace HKDevice
             return false;
         }
 
-        private bool CheckDiskFreeSpace()
+        protected override int GetProgress()
         {
-            if (mCurSkipCount > 0)
+            lock (mLockObj)
             {
-                mCurSkipCount--;
-                return true;
-            }
-            else if (mDrive != null && mDrive.IsReady)
-            {
-                long n = mDrive.TotalFreeSpace / 1048576; //1M = 1024 * 1024
-                if (n > 1)
+                if (mFileHandle > -1)
                 {
-                    mCurSkipCount = n / 3;
-                    return true;
+                    return HCNetSDKWrap.NET_DVR_GetDownloadPos(mFileHandle);
+                    //int outValue = -1;
+                    //if (HCNetSDKWrap.NET_DVR_PlayBackControl(mFileHandle, HCNetSDKWrap.NET_DVR_PLAYGETPOS, 0, ref outValue))
+                    //{
+                    //    return outValue;
+                    //}
                 }
             }
-
-            return false;
-        }
-
-        public static DriveInfo GetDriveInfo(string path)
-        {
-            if (path != null)
-            {
-                if (path == "")
-                    path = Application.ExecutablePath;
-
-                DriveInfo[] drives = System.IO.DriveInfo.GetDrives();
-                foreach (System.IO.DriveInfo drive in drives)
-                {
-                    if (drive.Name == Directory.GetDirectoryRoot(path))
-                    {
-                        if (drive.DriveType != DriveType.CDRom)
-                        {
-                            while (!drive.IsReady)
-                                System.Threading.Thread.Sleep(10);
-
-                            return drive;
-                        }
-                    }
-                }
-            }
-            return null;
-        }
+            return -1;
+        }        
     }
 
     public class CHKDVRDevice : CVideoDevice
@@ -1115,8 +1025,6 @@ namespace HKDevice
         private static Object mLockKeyObj = new Object();
         private static int mRootKey = 0;
 
-        private int  mUserID  = -1;
-
         private bool mAutoCheckStatus = false;
         private System.Timers.Timer mTimer = new System.Timers.Timer();
         private int mStatusCount = 0;
@@ -1126,7 +1034,7 @@ namespace HKDevice
         private Hashtable mPTZCtrls = new Hashtable();
 
         private AlarmClient mAlarmClient;
-        private RecordFile mRecordFile;
+        private IRecordFile mRecordFile;
 
         private HCNetSDKWrap.NET_DVR_DEVICEINFO mDeviceInfo = new HCNetSDKWrap.NET_DVR_DEVICEINFO();
 
@@ -1138,11 +1046,13 @@ namespace HKDevice
             : base(factory)
         {
             mAlarmClient = new AlarmClient(this);
-            mRecordFile = new RecordFile(this);
+            mRecordFile = new CHKDVRRecordFile(this);
 
             mTimer.Enabled  = false;
             mTimer.Interval = 1000;
-            mTimer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimerTick);                      
+            mTimer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimerTick);
+
+            UserID = -1;
         }
 
         public static int GetNewKey()
@@ -1247,10 +1157,10 @@ namespace HKDevice
 
         public int UserID
         {
-            get { return mUserID; }
+            get { return this.IntValue("UserID"); }
             protected set
             {
-                mUserID = value;
+                this.SetValue("UserID", value);
             }            
         }
 
@@ -1926,7 +1836,7 @@ namespace HKDevice
 
         #region 下载录像文件
 
-        public RecordFile GetRecordFile()
+        public IRecordFile GetRecordFile()
         {
             return mRecordFile;
         }

@@ -153,7 +153,7 @@ namespace VideoSource
             return null;
         }
 
-        public RecordFile GetRecordFile(string name)
+        public IRecordFile GetRecordFile(string name)
         {
             foreach (CHKDVRDevice device in mVideoDevices.Values)
             {

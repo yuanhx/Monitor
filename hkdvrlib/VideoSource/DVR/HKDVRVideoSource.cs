@@ -468,6 +468,9 @@ namespace VideoSource
         public CHKDVRBackPlayer(IVideoSourceConfig config, CHKDVRDevice device, IVideoSourceFactory factory, string fileName, IntPtr hWnd)
             : base(config, device, factory)
         {
+            RecordFile = new CHKDVRRecordFile(device);
+            RecordFile.RemoteFileName = fileName;
+
             HWnd = hWnd;
             if (HWnd == IntPtr.Zero)
             {
@@ -484,6 +487,11 @@ namespace VideoSource
         public CHKDVRBackPlayer(IVideoSourceConfig config, CHKDVRDevice device, IVideoSourceFactory factory, int channel, ref DateTime startTime, ref DateTime stopTime, IntPtr hWnd)
             : base(config, device, factory)
         {
+            RecordFile = new CHKDVRRecordFile(device);
+            RecordFile.Channel = channel;
+            RecordFile.StartTime = startTime;
+            RecordFile.StopTime = stopTime;
+
             HWnd = hWnd;
             if (HWnd == IntPtr.Zero)
             {
@@ -834,10 +842,10 @@ namespace VideoSource
             }
         }
 
-        private void DoRecordFileDownProgress(string fileName, int progress)
+        private void DoRecordFileDownProgress(IRecordFile sender, int progress, DownState state)
         {
             if (OnRecordFileDownProgress != null)
-                OnRecordFileDownProgress(fileName, progress);
+                OnRecordFileDownProgress(sender, progress, state);
         }
 
         public RecordFileInfo[] ListFile()

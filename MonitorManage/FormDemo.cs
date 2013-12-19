@@ -15,13 +15,14 @@ using MonitorSystem;
 using PTZ;
 using SDP;
 using monitorlib.Services;
+using monitorlib.Utils;
+using VideoSource;
 
 namespace MonitorManage
 {
     public partial class FormDemo : FormTransaction
     {
         private DataTable mLoginTable = new DataTable("t_login_log");
-        //private DataTable mEquTable = new DataTable("t_equipment");
 
         private IVideoSourceConfig mVSConfig = null;
 
@@ -38,7 +39,6 @@ namespace MonitorManage
             //SystemContext.Init();
 
             this.OpenTableFromSql(mLoginTable, "select * from t_login_log", "", "1,10", "");
-            //this.OpenTableFromSql(mEquTable, "select * from t_equipment", "", "", "");
 
             TableUtil.SetMapInfo(mLoginTable.Columns["f_state"], "1=登录;0=注销");
 
@@ -52,54 +52,24 @@ namespace MonitorManage
             videoPlayerManageCtrl1.OnActiveBoxChanged += new BoxEventHandle<VideoPlayer>(DoActiveBoxChanged);
 
             label_info.Text = "";
+            
+            dateTimePicker_end.Value = DateTime.Now;
+            dateTimePicker_begin.Value = dateTimePicker_end.Value.AddDays(-1);
         }
 
         private void DoActiveBoxChanging(VideoPlayer box)
         {
-            //if (box != null)
-            //{
-            //    box.Close();
-            //    box.Config = null;
-            //}
+            if (box != null)
+            {
+
+            }
         }
 
         private void DoActiveBoxChanged(VideoPlayer box)
         {
             if (box != null)
             {
-                //HKDVRRealPlayVideoSource 
-                //HKDVRBackPlayVideoSource
-                //HKFileVideoSource
-                if (mVSConfig == null)
-                {
-                    //mVSConfig = CLocalSystem.VideoSourceConfigManager.GetConfig("TestVS", true);
-                    //mVSConfig.Type = "HKFileVideoSource";
-                    //mVSConfig.FileName = @"D:\monitor\avi\aaa.avi";
-                    //mVSConfig.Enabled = true;
 
-                    //mVSConfig = CLocalSystem.VideoSourceConfigManager.GetConfig("TestVS", true);
-                    //mVSConfig.Type = "HKDVRRealPlayVideoSource";
-                    //mVSConfig.IP = "192.168.1.20";
-                    //mVSConfig.Port = 8000;
-                    //mVSConfig.Channel = 1;
-                    //mVSConfig.UserName = "admin";
-                    //mVSConfig.Password = "12345";
-                    //mVSConfig.Enabled = true;
-
-                    //mVSConfig = CLocalSystem.VideoSourceConfigManager.GetConfig("TestVS", true);
-                    //mVSConfig.Type = "HKDVRBackPlayVideoSource";
-                    //mVSConfig.IP = "192.168.1.20";
-                    //mVSConfig.Port = 8000;
-                    //mVSConfig.Channel = 1;
-                    //mVSConfig.UserName = "admin";
-                    //mVSConfig.Password = "12345";
-                    //mVSConfig.StartTime = Convert.ToDateTime("2013-11-19 08:19:10");
-                    //mVSConfig.StopTime = Convert.ToDateTime("2013-11-19 10:10:10");
-                    //mVSConfig.Enabled = true;
-                }
-
-                //box.Config = mVSConfig;
-                //box.Play();
             }
         }
 
@@ -132,35 +102,54 @@ namespace MonitorManage
                 }
                 else
                 {
-                    if (mVSConfig == null)
+                    IVideoSourceConfig vsConfig = null;
+
+                    TreeNode node = dataTreeView1.SelectedNode;
+                    if (node != null)
                     {
-                        //mVSConfig = CLocalSystem.VideoSourceConfigManager.GetConfig("TestVS", true);
-                        //mVSConfig.Type = "HKFileVideoSource";
-                        //mVSConfig.FileName = @"D:\monitor\avi\aaa.avi";
-                        //mVSConfig.Enabled = true;
-
-                        mVSConfig = CLocalSystem.VideoSourceConfigManager.GetConfig("TestVS", true);
-                        mVSConfig.Type = "HKDVRRealPlayVideoSource";
-                        mVSConfig.IP = "192.168.1.20";
-                        mVSConfig.Port = 8000;
-                        mVSConfig.Channel = 1;
-                        mVSConfig.UserName = "admin";
-                        mVSConfig.Password = "12345";
-                        mVSConfig.Enabled = true;
-
-                        //mVSConfig = CLocalSystem.VideoSourceConfigManager.GetConfig("TestVS", true);
-                        //mVSConfig.Type = "HKDVRBackPlayVideoSource";
-                        //mVSConfig.IP = "192.168.1.20";
-                        //mVSConfig.Port = 8000;
-                        //mVSConfig.Channel = 1;
-                        //mVSConfig.UserName = "admin";
-                        //mVSConfig.Password = "12345";
-                        //mVSConfig.StartTime = Convert.ToDateTime("2013-11-19 08:19:10");
-                        //mVSConfig.StopTime = Convert.ToDateTime("2013-11-19 10:10:10");
-                        //mVSConfig.Enabled = true;
+                        vsConfig = VSUtil.GetRealPlayConfig(node.Tag as DataRow);
                     }
-                    player.Config = mVSConfig;
-                    player.Play();
+
+                    if (vsConfig != null)
+                    {
+                        player.Config = vsConfig;
+                        player.Play();
+                    }
+                }
+            }
+        }
+
+        private void button_backplay_Click(object sender, EventArgs e)
+        {
+            VideoPlayer player = videoPlayerManageCtrl1.ActiveBox;
+            if (player != null)
+            {
+                if (player.Active)
+                {
+                    player.Close();
+                    player.Config = null;
+                    player.Refresh();
+                }
+                else
+                {
+                    IVideoSourceConfig vsConfig = null;
+
+                    TreeNode node = dataTreeView1.SelectedNode;
+                    if (node != null)
+                    {
+                        vsConfig = VSUtil.GetBackPlayConfig(node.Tag as DataRow);
+                        //vsConfig.StopTime = DateTime.Now;
+                        //vsConfig.StartTime = vsConfig.StopTime.AddDays(-1);
+                        
+                        vsConfig.StartTime = dateTimePicker_begin.Value;
+                        vsConfig.StopTime = dateTimePicker_end.Value;
+                    }
+
+                    if (vsConfig != null)
+                    {
+                        player.Config = vsConfig;
+                        player.Play();                        
+                    }
                 }
             }
         }
@@ -182,6 +171,17 @@ namespace MonitorManage
 
         private bool DoInitTreeNode(TreeNode node)
         {
+            DataRow row = node.Tag as DataRow;
+            if (row != null)
+            {
+                switch (row["camera"].ToString())
+                {
+                    case "0":   //组
+                        break;
+                    default:    //摄像头
+                        break;
+                }
+            }
             return true;
         }
 
@@ -272,8 +272,84 @@ namespace MonitorManage
 
         private void button_getTree_Click(object sender, EventArgs e)
         {
-            dataTreeView1.Table = MonitorServices.GetEquipmentGroupInfo("2");
+            dataTreeView1.Table = MonitorServices.GetOrgGroupEquipmentInfo(SystemContext.UnitId);
             dataTreeView1.RefreshView();
+        }
+
+        private void dataTreeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            VideoPlayer player = videoPlayerManageCtrl1.ActiveBox;
+            if (player != null)
+            {
+                if (player.Active)
+                {
+                    player.Close();
+                    player.Config = null;
+                    player.Refresh();
+                }
+                else
+                {
+                    IVideoSourceConfig vsConfig = VSUtil.GetVSConfig(e.Node.Tag as DataRow);
+                    if (vsConfig != null)
+                    {
+                        player.Config = vsConfig;
+                        player.Play();
+                    }
+                }
+            }
+        }
+
+        private void button_download_Click(object sender, EventArgs e)
+        {
+            if (this.saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                VideoPlayer player = videoPlayerManageCtrl1.ActiveBox;
+                if (player != null)
+                {
+                    IBackPlayer backPlay = player.VideoSource as IBackPlayer;
+                    if (backPlay != null)
+                    {
+                        //backPlay.StartDownload(this.saveFileDialog1.FileName);
+                        backPlay.StartDownload(dateTimePicker_begin.Value, dateTimePicker_end.Value, this.saveFileDialog1.FileName);
+                        return;
+                    }
+                }
+
+                TreeNode node = dataTreeView1.SelectedNode;
+                if (node != null)
+                {
+                    IVideoSourceConfig vsConfig = VSUtil.GetBackPlayConfig(node.Tag as DataRow);
+                    if (vsConfig != null)
+                    {
+                        vsConfig.StartTime = dateTimePicker_begin.Value;
+                        vsConfig.StopTime = dateTimePicker_end.Value;
+
+                        IVideoSource vs = CLocalSystem.VideoSourceManager.Open(vsConfig, IntPtr.Zero);
+                        if (vs != null)
+                        {
+                            IBackPlayer backPlay = vs as IBackPlayer;
+                            if (backPlay != null)
+                            {
+                                backPlay.RecordFile.OnDownProgress += new RECORDFILE_DOWNPROGRESS(DoDownProgress);
+                                backPlay.StartDownload(this.saveFileDialog1.FileName);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void DoDownProgress(IRecordFile sender, int progress, DownState state)
+        {
+            if (progress == 100 || state != DownState.Norme)
+            {
+                sender.OnDownProgress -= new RECORDFILE_DOWNPROGRESS(DoDownProgress);
+
+                if (progress == 100)
+                {
+                    MessageBox.Show(string.Format("下载{0}结束",sender.LocalFileName));
+                }
+            }
         }
     }
 }

@@ -714,26 +714,26 @@ namespace DVSCtrl
 
         #region 下载
 
-        private void DoRecordFileDownProgress(string fileName, int progress)
+        private void DoRecordFileDownProgress(IRecordFile sender, int progress, DownState state)
         {
             if (OnRecordFileDownProgress != null)
-                OnRecordFileDownProgress(fileName, progress);
+                OnRecordFileDownProgress(sender, progress, state);
         }
 
         public bool Download(string fileName)
         {
-            return Download(ref mStartTime, ref mStopTime, fileName);
+            return Download(mStartTime, mStopTime, fileName);
         }
 
-        public bool Download(ref DateTime startTime, ref DateTime stopTime, string fileName)
+        public bool Download(DateTime startTime, DateTime stopTime, string fileName)
         {
             CHKDVRDevice device = mFactory.GetVideoDevice(IP, 8000, UserName, Password, true) as CHKDVRDevice;
             if (device != null)
             {
-                RecordFile file = device.GetRecordFile();
-                if (file != null && !file.IsDownloading)
+                IRecordFile file = device.GetRecordFile();
+                if (file != null)
                 {
-                    return file.Download(Channel, ref startTime, ref stopTime, fileName);
+                    return file.Download(Channel, startTime, stopTime, fileName);
                 }
             }
             return false;
@@ -744,8 +744,8 @@ namespace DVSCtrl
             CHKDVRDevice device = mFactory.GetVideoDevice(IP, 8000, UserName, Password, true) as CHKDVRDevice;
             if (device != null)
             {
-                RecordFile file = device.GetRecordFile();
-                if (file != null && !file.IsDownloading)
+                IRecordFile file = device.GetRecordFile();
+                if (file != null)
                 {
                     return file.Download(sFileName, dFileName);
                 }
@@ -758,8 +758,8 @@ namespace DVSCtrl
             CHKDVRDevice device = mFactory.GetDevice(IP, UserName);
             if (device != null)
             {
-                RecordFile file = device.GetRecordFile();
-                if (file != null && file.IsDownloading)
+                IRecordFile file = device.GetRecordFile();
+                if (file != null)
                 {
                     return file.Stop();
                 }
